@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Language Translator</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🌍 AI Language Translator</h1>
+
+    <!-- Translation Form -->
+
+    <form method="POST" id="translateForm">
+
+        <textarea
+            id="inputText"
+            name="text"
+            placeholder="Enter text here..."
+            required></textarea>
+
+        <br><br>
+
+        <label><b>Translate To:</b></label>
+
+        <select id="target" name="target">
+
+            <option value="te">Telugu</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="es">Spanish</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">🌍 Translate</button>
+
+        <button type="button" onclick="startVoice()">
+            🎤 Voice
+        </button>
+
+        <button type="button" onclick="clearText()">
+            🗑 Clear
+        </button>
+
+        <button type="button" onclick="swapLanguage()">
+            🔄 Swap
+        </button>
+
+        <button type="button" onclick="toggleTheme()">
+            🌙 Theme
+        </button>
+
+    </form>
+
+    <hr>
+
+    <!-- Image Translation -->
+
+    <h2>🖼 Image Translation</h2>
+
+    <form action="/image"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <input
+            type="file"
+            name="image"
+            required>
+
+        <button>
+            Upload Image
+        </button>
+
+    </form>
+
+    <hr>
+
+    <!-- Translation Result -->
+
+    {% if translated %}
+
+    <div class="result">
+
+        <h2>Detected Language</h2>
+
+        <p>{{ source }}</p>
+
+        <h2>Translated Text</h2>
+
+        <p id="translatedText">
+
+            {{ translated }}
+
+        </p>
+
+        <br>
+
+        <button onclick="copyText()">
+
+            📋 Copy
+
+        </button>
+
+        <button onclick="speakText()">
+
+            🔊 Speak
+
+        </button>
+
+        <br><br>
+
+        <a href="/download?text={{ translated }}">
+
+            <button type="button">
+
+                📥 Download PDF
+
+            </button>
+
+        </a>
+
+        <br><br>
+
+        <form action="/favorite" method="POST">
+
+            <input
+                type="hidden"
+                name="original"
+                value="{{ request.form.get('text','') }}">
+
+            <input
+                type="hidden"
+                name="translated"
+                value="{{ translated }}">
+
+            <button>
+
+                ❤️ Save Favorite
+
+            </button>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+    <hr>
+
+    <div class="links">
+
+        <a href="/history">
+
+            <button>
+
+                📜 Translation History
+
+            </button>
+
+        </a>
+
+        <a href="/dashboard">
+
+            <button>
+
+                📊 Dashboard
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

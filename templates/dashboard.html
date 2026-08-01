@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 Translation Dashboard</h1>
+
+    <div class="stats">
+
+        <div class="box">
+            <h2>{{ total }}</h2>
+            <p>Total Translations</p>
+        </div>
+
+        <div class="box">
+            <h2>{{ languages|length }}</h2>
+            <p>Languages Used</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <h2>🌍 Languages Used</h2>
+
+    <table>
+
+        <tr>
+
+            <th>Language</th>
+
+            <th>Total</th>
+
+        </tr>
+
+        {% for row in languages %}
+
+        <tr>
+
+            <td>{{ row[0] }}</td>
+
+            <td>{{ row[1] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+
+    <h2>📈 Translation Statistics</h2>
+
+    <canvas id="languageChart"></canvas>
+
+    <br><br>
+
+    <a href="/">
+
+        <button>
+
+            🏠 Home
+
+        </button>
+
+    </a>
+
+    <a href="/history">
+
+        <button>
+
+            📜 History
+
+        </button>
+
+    </a>
+
+    <a href="/favorites">
+
+        <button>
+
+            ❤️ Favorites
+
+        </button>
+
+    </a>
+
+</div>
+
+<script>
+
+const labels = [
+    {% for row in languages %}
+        "{{ row[0] }}",
+    {% endfor %}
+];
+
+const data = [
+    {% for row in languages %}
+        {{ row[1] }},
+    {% endfor %}
+];
+
+const ctx = document.getElementById("languageChart");
+
+new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Translations",
+            data: data,
+            backgroundColor: [
+                "#3b82f6",
+                "#10b981",
+                "#f59e0b",
+                "#ef4444",
+                "#8b5cf6",
+                "#06b6d4"
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+
+</html>

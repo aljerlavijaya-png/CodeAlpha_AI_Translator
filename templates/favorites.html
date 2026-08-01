@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Favorite Translations</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>❤️ Favorite Translations</h1>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search Favorites..."
+        onkeyup="searchTable()">
+
+    <br><br>
+
+    {% if rows %}
+
+    <table>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Original Text</th>
+
+            <th>Translated Text</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        {% for row in rows %}
+
+        <tr>
+
+            <td>{{ row[0] }}</td>
+
+            <td>{{ row[1] }}</td>
+
+            <td id="fav{{ row[0] }}">{{ row[2] }}</td>
+
+            <td>
+
+                <button onclick="copyFavorite('fav{{ row[0] }}')">
+                    📋 Copy
+                </button>
+
+                <a href="/delete_favorite/{{ row[0] }}">
+
+                    <button style="background:red">
+
+                        🗑 Delete
+
+                    </button>
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <h2>No Favorite Translations Found</h2>
+
+    {% endif %}
+
+    <br><br>
+
+    <a href="/">
+
+        <button>
+
+            🏠 Home
+
+        </button>
+
+    </a>
+
+    <a href="/history">
+
+        <button>
+
+            📜 History
+
+        </button>
+
+    </a>
+
+    <a href="/dashboard">
+
+        <button>
+
+            📊 Dashboard
+
+        </button>
+
+    </a>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
