@@ -44,12 +44,14 @@ AI-Translator/
 
 ## How to Run
 
-1. Download or clone this repository.
-2. Open the project folder in Visual Studio Code.
-3. Install the **Live Server** extension (if not already installed).
-4. Right-click on `index.html` and choose **Open with Live Server**.
-5. Start using the translator.
-
+1. Clone or download this repository.
+2. Open the project in Visual Studio Code.
+3. Install the required Python packages:
+   pip install -r requirements.txt
+4. Run the application:
+   python app.py
+5. Open your browser and visit:
+   http://127.0.0.1:5000
 ---
 
 ## What I Learned
